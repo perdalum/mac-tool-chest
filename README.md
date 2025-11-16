@@ -1,7 +1,5 @@
 # Mac Tool Chest
 
-# Mac Tool Chest
-
 This repository is for automation and quick scripting on macOS. The advent of LLMs has finally, after 40 years of creating tools and then forgetting about them, motivated me to create a tool chest—this repository! 😃
 
 I'm still the creative and executive boss, but I now have several quite capable assistants—and they are much better than me at remembering libraries, function calls, parameters, etc., and they don't get bored...
