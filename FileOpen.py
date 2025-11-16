@@ -62,7 +62,7 @@ def open_path(path: Path) -> None:
 
 
 def choose_index(paths: list[Path]) -> int:
-    """Prompt user to pick an index (1..n). Return zero-based index."""
+    """Prompt the user to pick an index (1..n). Return zero-based index."""
     print(f"Found {len(paths)} matches:")
     for i, p in enumerate(paths, start=1):
         print(f"({i}) {p}")
