@@ -43,3 +43,10 @@ This is what it looks like when multiple matches are found:
     (2) /Users/au15929/test-bed/wierd-file-name-2.txt
     (3) /Users/au15929/test-bed/wierd-file-name-3456.txt
     Enter number to open (or q to quit): 
+
+### Future Work
+
+- add support for regular expressions
+- add support for macOS Finder file tags
+- add support for presets
+- add support for multiple file types, e.g. images, presentations, etc.
