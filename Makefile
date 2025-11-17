@@ -1,7 +1,12 @@
-INSTALL_DIR := $(HOME)/Documents/dotfiles/bin
-INSTALL_PATH := $(INSTALL_DIR)/FileOpen
+INSTALL_DIR ?= $(HOME)/Documents/dotfiles/bin
 
-.DEFAULT_GOAL := no-target
+# List of source files *with* extensions
+# You can override this on the command line:
+#   make install TOOLS="FileOpen.py foo.sh bar.jl"
+TOOLS ?= FileOpen.py ascii-barchart.sh
+
+# Default when no target is given (BSD make style)
+.MAIN: no-target
 
 no-target:
 	@echo "Error: no build target specified. Use 'make install'." >&2
@@ -9,5 +14,11 @@ no-target:
 
 install:
 	@test -d "$(INSTALL_DIR)" || { echo "Directory $(INSTALL_DIR) does not exist" >&2; exit 1; }
-	cp -p FileOpen.py "$(INSTALL_PATH)"
-	chmod +x "$(INSTALL_PATH)"
+	@for src in $(TOOLS); do \
+		base=$${src##*/};      \
+		base=$${base%.*};      \
+		dest="$(INSTALL_DIR)/$${base}"; \
+		echo "Installing $$src -> $$dest"; \
+		cp -p "$$src" "$$dest"; \
+		chmod +x "$$dest";     \
+	done
