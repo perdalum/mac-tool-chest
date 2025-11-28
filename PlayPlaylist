@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 # PlayFile: play a list of full paths from a file, with skip support
+# music files in ~/Music/Music/Media.localized/Music
 
 playlist_file="$1"
 

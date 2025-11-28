@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 # PlayDirectory: play all .m4a files under a directory, with skip + quit keys
+# music files in ~/Music/Music/Media.localized/Music
 
 root="$1"
 
