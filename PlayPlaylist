@@ -1,0 +1,43 @@
+#!/usr/bin/env zsh
+
+# PlayFile: play a list of full paths from a file, with skip support
+
+playlist_file="$1"
+
+if [[ -z "$playlist_file" || ! -r "$playlist_file" ]]; then
+    echo "Usage: PlayFile <playlist-file>"
+    echo "  <playlist-file> should contain one full path per line."
+    exit 1
+fi
+
+while IFS= read -r file || [[ -n "$file" ]]; do
+    # skip empty lines
+    [[ -z "$file" ]] && continue
+
+    if [[ ! -f "$file" ]]; then
+        echo "Missing file, skipping: $file"
+        continue
+    fi
+
+    echo
+    echo "Playing: $file"
+    afplay "$file" &
+    pid=$!
+
+    # Watch the player and keyboard
+    while kill -0 "$pid" 2>/dev/null; do
+        if read -k 1 -t 0.1 key; then
+            case "$key" in
+                s|S)
+                    echo "  -> skip"
+                    kill "$pid" 2>/dev/null
+                    ;;
+                q|Q)
+                    echo "  -> quit"
+                    kill "$pid" 2>/dev/null
+                    exit 0
+                    ;;
+            esac
+        fi
+    done
+done < "$playlist_file"
