@@ -3,7 +3,10 @@ INSTALL_DIR ?= $(HOME)/Documents/dotfiles/bin
 # List of source files *with* extensions
 # You can override this on the command line:
 #   make install TOOLS="FileOpen.py foo.sh bar.jl"
-TOOLS ?= FileOpen.py ascii-barchart.sh
+TOOLS ?= FileOpen.py \
+		 ascii-barchart.sh \
+		 PlayDirectory \
+		 PlayPlaylist
 
 # Default when no target is given (BSD make style)
 .MAIN: no-target
