@@ -1,19 +1,44 @@
 #!/usr/bin/env zsh
 
 # PlayDirectory: play all .m4a files under a directory, with skip + quit keys
-# music files in ~/Music/Music/Media.localized/Music
+
+skip=0
+
+# --- parse args --------------------------------------------------------------
+while getopts "s:" opt; do
+    case "$opt" in
+        s)
+            skip=$OPTARG
+            ;;
+        *)
+            echo "Usage: $0 [-s <n>] <directory>"
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
 
 root="$1"
 
 if [[ -z "$root" || ! -d "$root" ]]; then
-    echo "Usage: PlayDirectory <directory>"
+    echo "Usage: $0 [-s <n>] <directory>"
     exit 1
 fi
 
-# Use find to generate a null-separated list, then feed into a loop
+# --- walk & play -------------------------------------------------------------
+count=0
+
 find "$root" -type f -name '*.m4a' -print0 |
 while IFS= read -r -d '' file; do
     [[ -z "$file" ]] && continue
+
+    # Skip first N files
+    if (( count < skip )); then
+        ((count++))
+        continue
+    fi
+
+    ((count++))
 
     echo
     echo "Playing: $file"

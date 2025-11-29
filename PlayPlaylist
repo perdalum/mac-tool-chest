@@ -1,19 +1,44 @@
 #!/usr/bin/env zsh
 
 # PlayFile: play a list of full paths from a file, with skip support
-# music files in ~/Music/Music/Media.localized/Music
+
+skip=0
+
+# --- parse args --------------------------------------------------------------
+while getopts "s:" opt; do
+    case "$opt" in
+        s)
+            skip=$OPTARG
+            ;;
+        *)
+            echo "Usage: $0 [-s <n>] <playlist-file>"
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
 
 playlist_file="$1"
 
 if [[ -z "$playlist_file" || ! -r "$playlist_file" ]]; then
-    echo "Usage: PlayFile <playlist-file>"
+    echo "Usage: $0 [-s <n>] <playlist-file>"
     echo "  <playlist-file> should contain one full path per line."
     exit 1
 fi
 
+# --- playback loop -----------------------------------------------------------
+count=0
+
 while IFS= read -r file || [[ -n "$file" ]]; do
     # skip empty lines
     [[ -z "$file" ]] && continue
+
+    # skip first N valid lines
+    if (( count < skip )); then
+        ((count++))
+        continue
+    fi
+    ((count++))
 
     if [[ ! -f "$file" ]]; then
         echo "Missing file, skipping: $file"
