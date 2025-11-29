@@ -6,7 +6,8 @@ INSTALL_DIR ?= $(HOME)/Documents/dotfiles/bin
 TOOLS ?= FileOpen.py \
 		 ascii-barchart.sh \
 		 PlayDirectory \
-		 PlayPlaylist
+		 PlayPlaylist \
+		 PlayExtractPlaylist
 
 # Default when no target is given (BSD make style)
 .MAIN: no-target
