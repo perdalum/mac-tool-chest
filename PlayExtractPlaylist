@@ -7,25 +7,25 @@ on run argv
 
     set playlistName to item 1 of argv
 
-tell application "Music"
-    set thePlaylist to playlist playListName
-    set theTracks to tracks of thePlaylist
-    set output to ""
+    tell application "Music"
+        set thePlaylist to playlist playListName
+        set theTracks to tracks of thePlaylist
+        set output to ""
 
-    repeat with t in theTracks
-        set trackName to name of t
-        set trackArtist to artist of t
-        set trackAlbum to album of t
+        repeat with t in theTracks
+            set trackName to name of t
+            set trackArtist to artist of t
+            set trackAlbum to album of t
 
-        try
-            set trackLocation to POSIX path of (location of t)
-        on error
-            set trackLocation to ""
-        end try
+            try
+                set trackLocation to POSIX path of (location of t)
+            on error
+                set trackLocation to ""
+            end try
 
-        set output to output & trackName & " | " & trackArtist & " | " & trackAlbum & " | " & trackLocation & "\n"
-    end repeat
+            set output to output & trackName & " | " & trackArtist & " | " & trackAlbum & " | " & trackLocation & "\n"
+        end repeat
 
-    return output
-end tell
+        return output
+    end tell
 end run
